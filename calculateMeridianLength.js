@@ -2,16 +2,16 @@ const math = require("mathjs");
 var convert = require("convert-units");
 
 //Data Lintang pada Bujur yang sama
-// const L1 = 0.0625613612 * math.pi;
-// const L2 = 0.0264137058 * math.pi;
+const L1r = 0.0625613612 * math.pi;
+const L2r = 0.0264137058 * math.pi;
 const L1 = math.unit(
-  convert(0.0625613612 * math.pi)
+  convert(L1r)
     .from("rad")
     .to("deg"),
   "deg"
 ).value; //LS
 const L2 = math.unit(
-  convert(0.0264137058 * math.pi)
+  convert(L2r)
     .from("rad")
     .to("deg"),
   "deg"
