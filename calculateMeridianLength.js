@@ -1,9 +1,21 @@
 const math = require("mathjs");
 var convert = require("convert-units");
 
-//Data
-const L1 = 0.0625613612 * math.pi; //LS
-const L2 = 0.0264137058 * math.pi; //LU
+//Data Lintang pada Bujur yang sama
+// const L1 = 0.0625613612 * math.pi;
+// const L2 = 0.0264137058 * math.pi;
+const L1 = math.unit(
+  convert(0.0625613612 * math.pi)
+    .from("rad")
+    .to("deg"),
+  "deg"
+).value; //LS
+const L2 = math.unit(
+  convert(0.0264137058 * math.pi)
+    .from("rad")
+    .to("deg"),
+  "deg"
+).value; //LU
 
 //WGS 84
 const a = 6378137; //meter
@@ -63,4 +75,8 @@ console.log(
     .from("m")
     .to("km")} km`
 );
-console.log("selisih kedua metode: "+ (calculateMeridianLength() - calculateMeridianLength("bessel")) + " m");
+console.log(
+  "selisih kedua metode: " +
+    (calculateMeridianLength() - calculateMeridianLength("bessel")) +
+    " m"
+);
