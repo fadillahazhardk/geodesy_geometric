@@ -1,3 +1,8 @@
+//Nama : Fadillah Azhar Deaudin Kurniawan
+//NIM : 15119066
+
+//Script to calculate length in meridian
+
 const math = require("mathjs");
 var convert = require("convert-units");
 
