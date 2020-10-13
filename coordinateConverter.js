@@ -40,6 +40,7 @@ exports.geoToKartClosed = (h, lat, lon, ellipsoid) => {
     y,
     z,
     e,
+    b,
     N,
   };
 };
@@ -67,6 +68,9 @@ exports.kartToGeoClosed = (X, Y, Z, ellipsoid) => {
     .to("deg");
 
   //Calculate Coord
+  const loncalculator = convert(math.atan(Y / X))
+    .from("rad")
+    .to("deg");
   const lon = convert(math.atan2(Y, X)).from("rad").to("deg"); //we got radian unit
 
   const pembilangLat =
@@ -84,7 +88,9 @@ exports.kartToGeoClosed = (X, Y, Z, ellipsoid) => {
     message: `koordinatnya: ${lat}, ${lon}, ${h}`,
     lat,
     lon,
+    loncalculator,
     h,
+    b,
     N,
     e1,
     e2,
@@ -126,16 +132,31 @@ exports.kartToGeoIteratif = (X, Y, Z, ellipsoid) => {
         .to("deg");
     N = calcRad.calcIrisanVerUtamaRad(lat, a, e);
     h = p / math.cos(math.unit(lat, "deg")) - N;
+
+    console.log(`
+      -
+      lat = ${lat} N = ${N} h = ${h}
+      -
+    `)
+
     if (latSebelum === lat && hSebelum === h) break;
     hSebelum = h;
     latSebelum = lat;
   }
+
   const lon = convert(math.atan2(Y, X)).from("rad").to("deg");
+  const loncalculator = convert(math.atan(Y / X))
+    .from("rad")
+    .to("deg");
 
   return {
     message: `koordinatnya: ${latSebelum}, ${lon}, ${h}`,
     lat: latSebelum,
     lon,
+    loncalculator,
     h,
+    p,
+    e,
+    a,
   };
 };
