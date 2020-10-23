@@ -40,6 +40,7 @@ exports.geoToKartClosed = (h, lat, lon, ellipsoid) => {
     y,
     z,
     e,
+    a,
     b,
     N,
   };

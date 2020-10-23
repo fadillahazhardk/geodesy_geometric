@@ -5,27 +5,49 @@ const sphericalTriangle = require("./sphericalEarth");
 //Menghitung panjang busur meridian
 // console.log(calcMeridianLength.calcMeridianLength(90, 90, "wgs84"));
 
-//Segitiga Bola
-// const a = sphericalTriangle.calcCosRule(90 - 3.563333, 90 - 35.71, 41.125).a;
-// console.log(360 - sphericalTriangle.calcSinRule(41.125, 90 - 3.563333, a).beta);
+// Segitiga Bola
+// const a = sphericalTriangle.calcCosRule(90 + 38, 90 + 10, 31).a;
+
+// console.log(360 - sphericalTriangle.calcSinRule(31, 90 + 38, a).beta);
 
 //Transformasi koordinat
 // Soal Nomor 1
-// Koordinat Titik Q di sistem koordinat geodetik dengan referensi WGS84
-// const lat = 1.358966; //deg
-// const lon = 91.80776; //deg
-// const h = 10952; //meter
+// Koordinat Titik A di sistem koordinat geodetik dengan referensi WGS84
+const latA = -6.529134; //deg
+const lonA = 107.8814; //deg
+const hA = 763.243; //meter
 
-//Koordinat titik Q di kartesian3D
-// const kartcoord = corconv.geoToKartClosed(h, lat, lon, "wgs84");
-// console.log(kartcoord)
-// const X = kartcoord.x;
-// const Y = kartcoord.y;
-// const Z = kartcoord.z;
+// Koordinat Titik B di sistem koordinat geodetik dengan referensi WGS84
+const lat = -6.527982; //deg
+const lon = 107.8809; //deg
+const h = 798.507; //meter
+
+// Koordinat titik A B di kartesian3D
+const kartcoordB = corconv.geoToKartClosed(h, lat, lon, "wgs84");
+console.log(kartcoordB)
+const X = kartcoordB.x;
+const Y = kartcoordB.y;
+const Z = kartcoordB.z;
+
+// const kartcoordA = corconv.geoToKartClosed(hA, latA, lonA, "wgs84");
+// console.log(kartcoordA)
+// const XA = kartcoordA.x;
+// const YA = kartcoordA.y;
+// const ZA = kartcoordA.z;
+
+// console.log(`
+//    DeltaXBA =  ${X - XA}
+//    DeltaYBA =  ${Y - YA}
+//    DeltaZBA =  ${Z - ZA}
+// `)
+
+const X = -1946083.80345981
+const Y = 6031638.14484038
+const Z = -720516.100791163
 
 // // Koordinat Titik Q di sistem koordinat geodetik dengan referensi Bessel 1841
-// const coordOnBessel = corconv.kartToGeoClosed(X, Y, Z, "bessel");
-// console.log(coordOnBessel);
+const coordOnBessel = corconv.kartToGeoClosed(X, Y, Z, "wgs84");
+console.log(coordOnBessel);
 // const latBessel = coordOnBessel.lat;
 // const lonBessel = coordOnBessel.lon;
 // const hBessel = coordOnBessel.h;
