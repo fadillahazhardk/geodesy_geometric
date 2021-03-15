@@ -1,141 +1,152 @@
 const corconv = require("./coordinateConverter");
-const calcMeridianLength = require("./calculateMeridianLength");
-const sphericalTriangle = require("./sphericalEarth");
 
-//Menghitung panjang busur meridian
-// console.log(calcMeridianLength.calcMeridianLength(90, 90, "wgs84"));
+// const calcMeridianLength = require("./calculateMeridianLength");
+// const sphericalTriangle = require("./sphericalEarth");
 
-// Segitiga Bola
-// const a = sphericalTriangle.calcCosRule(90 + 38, 90 + 10, 31).a;
+// //Menghitung panjang busur meridian
+// // console.log(calcMeridianLength.calcMeridianLength(90, 90, "wgs84"));
 
-// console.log(360 - sphericalTriangle.calcSinRule(31, 90 + 38, a).beta);
+// // Segitiga Bola
+// // const a = sphericalTriangle.calcCosRule(90 + 38, 90 + 10, 31).a;
 
-//Transformasi koordinat
-// Soal Nomor 1
-// Koordinat Titik A di sistem koordinat geodetik dengan referensi WGS84
-const latA = -6.529134; //deg
-const lonA = 107.8814; //deg
-const hA = 763.243; //meter
+// // console.log(360 - sphericalTriangle.calcSinRule(31, 90 + 38, a).beta);
 
-// Koordinat Titik B di sistem koordinat geodetik dengan referensi WGS84
-const lat = -6.527982; //deg
-const lon = 107.8809; //deg
-const h = 798.507; //meter
+// //Transformasi koordinat
+// // Soal Nomor 1
+// // Koordinat Titik A di sistem koordinat geodetik dengan referensi WGS84
+// const latA = -6.529134; //deg
+// const lonA = 107.8814; //deg
+// const hA = 763.243; //meter
 
-// Koordinat titik A B di kartesian3D
-const kartcoordB = corconv.geoToKartClosed(h, lat, lon, "wgs84");
-console.log(kartcoordB)
-const X = kartcoordB.x;
-const Y = kartcoordB.y;
-const Z = kartcoordB.z;
+// // Koordinat Titik B di sistem koordinat geodetik dengan referensi WGS84
+// const lat = -6.527982; //deg
+// const lon = 107.8809; //deg
+// const h = 798.507; //meter
 
-// const kartcoordA = corconv.geoToKartClosed(hA, latA, lonA, "wgs84");
-// console.log(kartcoordA)
-// const XA = kartcoordA.x;
-// const YA = kartcoordA.y;
-// const ZA = kartcoordA.z;
+// // Koordinat titik A B di kartesian3D
+// const kartcoordB = corconv.geoToKartClosed(h, lat, lon, "wgs84");
+// console.log(kartcoordB)
+// const X = kartcoordB.x;
+// const Y = kartcoordB.y;
+// const Z = kartcoordB.z;
 
-// console.log(`
-//    DeltaXBA =  ${X - XA}
-//    DeltaYBA =  ${Y - YA}
-//    DeltaZBA =  ${Z - ZA}
-// `)
+// // const kartcoordA = corconv.geoToKartClosed(hA, latA, lonA, "wgs84");
+// // console.log(kartcoordA)
+// // const XA = kartcoordA.x;
+// // const YA = kartcoordA.y;
+// // const ZA = kartcoordA.z;
 
-const X = -1946083.80345981
-const Y = 6031638.14484038
-const Z = -720516.100791163
+// // console.log(`
+// //    DeltaXBA =  ${X - XA}
+// //    DeltaYBA =  ${Y - YA}
+// //    DeltaZBA =  ${Z - ZA}
+// // `)
 
-// // Koordinat Titik Q di sistem koordinat geodetik dengan referensi Bessel 1841
-const coordOnBessel = corconv.kartToGeoClosed(X, Y, Z, "wgs84");
-console.log(coordOnBessel);
-// const latBessel = coordOnBessel.lat;
-// const lonBessel = coordOnBessel.lon;
-// const hBessel = coordOnBessel.h;
+// const X = -1946083.80345981
+// const Y = 6031638.14484038
+// const Z = -720516.100791163
 
-// const coordOnBessel2 = corconv.kartToGeoIteratif(X, Y, Z, "bessel");
-// console.log(coordOnBessel2)
-// const latBessel2 = coordOnBessel2.lat;
-// const lonBessel2 = coordOnBessel2.lon;
-// const hBessel2 = coordOnBessel2.h;
+// // // Koordinat Titik Q di sistem koordinat geodetik dengan referensi Bessel 1841
+// const coordOnBessel = corconv.kartToGeoClosed(X, Y, Z, "wgs84");
+// console.log(coordOnBessel);
+// // const latBessel = coordOnBessel.lat;
+// // const lonBessel = coordOnBessel.lon;
+// // const hBessel = coordOnBessel.h;
 
-// console.log(`
-//     SOAL NOMOR SATU
-//     Koordinat titik Q di WGS84: lat = ${lat}; lon = ${lon}; h = ${h}.
+// // const coordOnBessel2 = corconv.kartToGeoIteratif(X, Y, Z, "bessel");
+// // console.log(coordOnBessel2)
+// // const latBessel2 = coordOnBessel2.lat;
+// // const lonBessel2 = coordOnBessel2.lon;
+// // const hBessel2 = coordOnBessel2.h;
 
-//     1. Pendekatan dengan formula tertutup
-//     Koodinat titik Q di Bessel1841: lat = ${latBessel}; lon = ${lonBessel}; h = ${hBessel}.
+// // console.log(`
+// //     SOAL NOMOR SATU
+// //     Koordinat titik Q di WGS84: lat = ${lat}; lon = ${lon}; h = ${h}.
 
-//     2. Pendekatan dengan formula iteratif
-//     Koodinat titik Q di Bessel1841: lat = ${latBessel2}; lon = ${lonBessel2}; h = ${hBessel2}.
-// `);
+// //     1. Pendekatan dengan formula tertutup
+// //     Koodinat titik Q di Bessel1841: lat = ${latBessel}; lon = ${lonBessel}; h = ${hBessel}.
 
-// Soal Nomor 2
-// Koordinat Titik Q di sistem koordinat geodetik dengan referensi GRS80
-// const lat = -6.579958; //deg
-// const lon = 107.8756; //deg
-// const h = 734.881; //meter
+// //     2. Pendekatan dengan formula iteratif
+// //     Koodinat titik Q di Bessel1841: lat = ${latBessel2}; lon = ${lonBessel2}; h = ${hBessel2}.
+// // `);
 
-// const kartcoord = corconv.geoToKartClosed(h, lat, lon, "grs80");
-// const X = kartcoord.x + 1;
-// const Y = kartcoord.y - 2;
-// const Z = kartcoord.z + 2;
+// // Soal Nomor 2
+// // Koordinat Titik Q di sistem koordinat geodetik dengan referensi GRS80
+// // const lat = -6.579958; //deg
+// // const lon = 107.8756; //deg
+// // const h = 734.881; //meter
 
-// const coordOnGRS80 = corconv.kartToGeoClosed(X, Y, Z, "grs80");
-// const lat1 = coordOnGRS80.lat;
-// const lon1 = coordOnGRS80.lon;
-// const h1 = coordOnGRS80.h;
+// // const kartcoord = corconv.geoToKartClosed(h, lat, lon, "grs80");
+// // const X = kartcoord.x + 1;
+// // const Y = kartcoord.y - 2;
+// // const Z = kartcoord.z + 2;
 
-// const coordOnGRS802 = corconv.kartToGeoIteratif(X, Y, Z, "grs80");
-// const lat2 = coordOnGRS802.lat;
-// const lon2 = coordOnGRS802.lon;
-// const h2 = coordOnGRS802.h;
+// // const coordOnGRS80 = corconv.kartToGeoClosed(X, Y, Z, "grs80");
+// // const lat1 = coordOnGRS80.lat;
+// // const lon1 = coordOnGRS80.lon;
+// // const h1 = coordOnGRS80.h;
 
-// console.log(`
-//     SOAL NOMOR DUA
+// // const coordOnGRS802 = corconv.kartToGeoIteratif(X, Y, Z, "grs80");
+// // const lat2 = coordOnGRS802.lat;
+// // const lon2 = coordOnGRS802.lon;
+// // const h2 = coordOnGRS802.h;
 
-//     Koordinat titik Q di GRS80: lat = ${lat}; lon = ${lon}; h = ${h}.
-//     Koordinat titik Q di Kartesian3D pertama: X = ${X - 1}; Y = ${Y + 2}; Z = ${
-//   Z - 2
-// }.
-//     Koordinat titik Q di Kartesian3D kedua: X = ${X}; Y = ${Y}; Z = ${Z}.
+// // console.log(`
+// //     SOAL NOMOR DUA
 
-//     1. Pendekatan dengan cara formula tertutup
-//     Koodinat titik Q di GRS80: lat = ${lat1}; lon = ${lon1}; h = ${h1}.
+// //     Koordinat titik Q di GRS80: lat = ${lat}; lon = ${lon}; h = ${h}.
+// //     Koordinat titik Q di Kartesian3D pertama: X = ${X - 1}; Y = ${Y + 2}; Z = ${
+// //   Z - 2
+// // }.
+// //     Koordinat titik Q di Kartesian3D kedua: X = ${X}; Y = ${Y}; Z = ${Z}.
 
-//     2. Pendekatan dengan cara formula iteratif
-//     Koodinat titik Q di GRS80: lat = ${lat2}; lon = ${lon2}; h = ${h2}.
-// `);
+// //     1. Pendekatan dengan cara formula tertutup
+// //     Koodinat titik Q di GRS80: lat = ${lat1}; lon = ${lon1}; h = ${h1}.
 
-// Soal Nomor 3
-// Koordinat Titik P di sistem koordinat geodetik dengan referensi WGS84
-// const lat = -6.579958;
-// const lon = 107.8756;
-// const h = 734.881;
+// //     2. Pendekatan dengan cara formula iteratif
+// //     Koodinat titik Q di GRS80: lat = ${lat2}; lon = ${lon2}; h = ${h2}.
+// // `);
 
-// const kartcoord = corconv.geoToKartClosed(h, lat, lon, "wgs84");
-// const X = kartcoord.x - 1577.302;
-// const Y = kartcoord.y + 32.484;
-// const Z = kartcoord.z + 53.056;
+// // Soal Nomor 3
+// // Koordinat Titik P di sistem koordinat geodetik dengan referensi WGS84
+// // const lat = -6.579958;
+// // const lon = 107.8756;
+// // const h = 734.881;
 
-// const coordOnWGS = corconv.kartToGeoClosed(X, Y, Z, "wgs84");
-// const latQ = coordOnWGS.lat;
-// const lonQ = coordOnWGS.lon;
-// const hQ = coordOnWGS.h;
+// // const kartcoord = corconv.geoToKartClosed(h, lat, lon, "wgs84");
+// // const X = kartcoord.x - 1577.302;
+// // const Y = kartcoord.y + 32.484;
+// // const Z = kartcoord.z + 53.056;
 
-// const coordOnWGS2 = corconv.kartToGeoIteratif(X, Y, Z, "wgs84");
-// const latQ2 = coordOnWGS2.lat;
-// const lonQ2 = coordOnWGS2.lon;
-// const hQ2 = coordOnWGS2.h;
+// // const coordOnWGS = corconv.kartToGeoClosed(X, Y, Z, "wgs84");
+// // const latQ = coordOnWGS.lat;
+// // const lonQ = coordOnWGS.lon;
+// // const hQ = coordOnWGS.h;
 
-// console.log(`
-//     SOAL NOMOR TIGA
-//     Koordinat titik P di GWS84: lat = ${lat}; lon = ${lon}; h = ${h}.
+// // const coordOnWGS2 = corconv.kartToGeoIteratif(X, Y, Z, "wgs84");
+// // const latQ2 = coordOnWGS2.lat;
+// // const lonQ2 = coordOnWGS2.lon;
+// // const hQ2 = coordOnWGS2.h;
 
-//     1. Pendekatan Closed
-//     Koodinat titik P di WGS84: lat = ${latQ}; lon = ${lonQ}; h = ${hQ}.
-//     Koordinat titik P di Kartesian3D: X = ${X - 1577.302}; Y = ${Y + 32.484}; Z = ${Z - 53.056}.
+// // console.log(`
+// //     SOAL NOMOR TIGA
+// //     Koordinat titik P di GWS84: lat = ${lat}; lon = ${lon}; h = ${h}.
 
-//     2. Pendekatan Iteratif
-//     Koodinat titik Q di WGS84: lat = ${latQ2}; lon = ${lonQ2}; h = ${hQ2}.
-//     Koordinat titik Q di Kartesian3D kedua: X = ${X}; Y = ${Y}; Z = ${Z}.
-// `);
+// //     1. Pendekatan Closed
+// //     Koodinat titik P di WGS84: lat = ${latQ}; lon = ${lonQ}; h = ${hQ}.
+// //     Koordinat titik P di Kartesian3D: X = ${X - 1577.302}; Y = ${Y + 32.484}; Z = ${Z - 53.056}.
+
+// //     2. Pendekatan Iteratif
+// //     Koodinat titik Q di WGS84: lat = ${latQ2}; lon = ${lonQ2}; h = ${hQ2}.
+// //     Koordinat titik Q di Kartesian3D kedua: X = ${X}; Y = ${Y}; Z = ${Z}.
+// // `);
+
+//Sampah saja
+//TUGAS GG MINGGU 13
+// NO 1
+// console.log(corconv.topoToGeodetic("1*44*9", 132.060, 120, "-6*53*33", "107*36*32", 771 ))
+// NO 2
+//console.log(corconv.topoToGeodetic("1*11*55.46223", 52686.30946316514, "-89*51*16.23852", "-6*55*3.19", "107*37*8.82", 0 ))
+
+console.log(corconv.kartToGeoClosed(-1917248.24242, 6035197.10416 , -759799.96212, "wgs84"))
+

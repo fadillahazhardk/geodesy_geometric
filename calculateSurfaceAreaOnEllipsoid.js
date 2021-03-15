@@ -14,10 +14,10 @@ const dmToDeg = (val) => {
   return deg + min * 100 * degCoef;
 };
 
-// //WGS 84
-// const a = 6378137; //meter
-// const b = 6356752.3142; //meter
-// const e = Math.sqrt(math.pow(a, 2) - math.pow(b, 2)) / a;
+//WGS 84
+const a = 6378137; //meter
+const b = 6356752.3142; //meter
+const e = Math.sqrt(math.pow(a, 2) - math.pow(b, 2)) / a;
 
 //Perhitungan
 exports.calcMeridianRad = (lat, a, e) => {

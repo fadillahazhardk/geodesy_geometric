@@ -1,13 +1,18 @@
-//Nama : Fadillah Azhar Deaudin Kurniawan
-//NIM : 15119066
-
 const math = require("mathjs");
 const convert = require("convert-units");
 const calcRad = require("./calculateSurfaceAreaOnEllipsoid");
-const { atan, cos } = require("mathjs");
+const { atan, cos, sin, unit, multiply, transpose, add } = require("mathjs");
+const parseDMS = require("parse-dms") 
+const formatcoord = require("formatcoords")
+
+exports.toDecimal = (dmsString) => {
+  const dmsArr = dmsString.split("*")
+  const dec =  parseDMS(`${dmsArr[0]}°${dmsArr[1]}\'${dmsArr[2]}"N 92°44\'51"E`).lat
+  return dec
+}
 
 //Metode tertutup dari geodetik ke kartesia3D
-exports.geoToKartClosed = (h, lat, lon, ellipsoid) => {
+exports.geoToKartClosed = (h, lat, lon, ellipsoid="wgs84") => {
   let a = null,
     b = null;
 
@@ -47,7 +52,7 @@ exports.geoToKartClosed = (h, lat, lon, ellipsoid) => {
 };
 
 //Metode tertutup/bowring dari kartesia3D ke geodetik
-exports.kartToGeoClosed = (X, Y, Z, ellipsoid) => {
+exports.kartToGeoClosed = (X, Y, Z, ellipsoid="wgs84") => {
   //Data
   let a = null,
     b = null;
@@ -89,6 +94,7 @@ exports.kartToGeoClosed = (X, Y, Z, ellipsoid) => {
     message: `koordinatnya: ${lat}, ${lon}, ${h}`,
     lat,
     lon,
+    latlonDMS: formatcoord(lat,lon).format(),
     loncalculator,
     h,
     b,
@@ -161,3 +167,41 @@ exports.kartToGeoIteratif = (X, Y, Z, ellipsoid) => {
     a,
   };
 };
+
+//toposentrik ke kartesia3D
+// m = sudut miring titik origin ke titik yang dicari
+exports.topoToGeodetic = (mStr, d, alpha, latOriginStr, lonOriginStr, hOrigin, ellipsoid="wgs84") => {
+  //Konvert sudut
+  mStr = this.toDecimal(mStr)
+  latOriginStr = this.toDecimal(latOriginStr)
+  lonOriginStr = this.toDecimal(lonOriginStr)
+  alpha = this.toDecimal(alpha)
+
+  //1. Mencari koordinat titik C di Toposentrik
+  const nC = d *  cos(unit(mStr, "deg")) * cos(unit(alpha, "deg"))
+  const eC = d *  cos(unit(mStr, "deg")) * sin(unit(alpha, "deg"))
+  const Uc = d *  sin(unit(mStr, "deg")) 
+  const topoCMatrix = [nC, eC, Uc]
+
+  //2. Konversi koordinat titik C dari toposentrik ke kartesia3D Global
+  // Mencari Delta
+  const R = [
+    [-sin(unit(latOriginStr, "deg"))*cos(unit(lonOriginStr,"deg")), sin(unit(latOriginStr, "deg"))*sin(unit(lonOriginStr,"deg")), cos(unit(latOriginStr, "deg"))],
+    [-sin(unit(lonOriginStr, "deg")), cos(unit(lonOriginStr, "deg")), 0],
+    [cos(unit(latOriginStr, "deg"))*cos(unit(lonOriginStr, "deg")), cos(unit(latOriginStr, "deg"))*sin(unit(lonOriginStr, "deg")), sin(unit(latOriginStr, "deg"))]
+  ]
+  const delta = multiply(transpose(R), topoCMatrix)
+
+  //Konversi titik Origin ke kartesia3D
+  const originKartesia = this.geoToKartClosed(hOrigin, latOriginStr, lonOriginStr)
+  const originKartesiaMatrix = [originKartesia.x, originKartesia.y, originKartesia.z
+  ]
+  //Koordinat titik C relatif terhadap Origin di Kartesia3D
+  const CKartesiaCoordinate = add(delta, originKartesiaMatrix)
+
+  //3. Konversi dari C kartesia 3D Ke geodetik
+  const CGeodetik = this.kartToGeoClosed(CKartesiaCoordinate[0], CKartesiaCoordinate[1], CKartesiaCoordinate[2])
+
+
+  return CGeodetik
+}
